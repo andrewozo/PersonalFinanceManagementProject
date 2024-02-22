@@ -4,10 +4,10 @@ namespace PersonalFinanceManagementProject.Services
 {
     public interface ITransactionService
     {
-        Task<List<GetTransactionDTO>> GetAllTransactions();
+        Task<ServiceResponse<List<GetTransactionDTO>>> GetAllTransactions();
 
-        Task<GetTransactionDTO> GetTransactionById(int id);
+        Task<ServiceResponse<GetTransactionDTO>> GetTransactionById(int id);
 
-        Task<List<AddTransactionDTO>> AddTransaction(AddTransactionDTO newTransaction);
+        Task<ServiceResponse<List<GetTransactionDTO>>> AddTransaction(AddTransactionDTO newTransaction);
     }
 }
