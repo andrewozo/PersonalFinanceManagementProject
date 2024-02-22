@@ -1,4 +1,19 @@
+global using Microsoft.EntityFrameworkCore;
+global using PersonalFinanceManagementProject.Models;
+global using PersonalFinanceManagementProject.DTOS;
+using PersonalFinanceManagementProject.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Filters;
+using Microsoft.OpenApi.Models;
+using Auth0.AspNetCore.Authentication;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<DataContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
