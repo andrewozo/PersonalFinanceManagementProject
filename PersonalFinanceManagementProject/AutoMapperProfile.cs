@@ -7,9 +7,9 @@ namespace PersonalFinanceManagementProject
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile() {
-            CreateMap<Transaction, GetTransactionDTO>();
+            CreateMap<Transaction, GetTransactionDto>();
 
-            CreateMap<AddTransactionDTO, Transaction>();
+            CreateMap<AddTransactionDto, Transaction>();
 
             CreateMap<Budget, GetBudgetDTO>();
 

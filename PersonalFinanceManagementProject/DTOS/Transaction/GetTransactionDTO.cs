@@ -1,6 +1,6 @@
 ﻿namespace PersonalFinanceManagementProject.DTOS.Transaction
 {
-    public class GetTransactionDTO
+    public class GetTransactionDto
     {
         public int Id { get; set; }
 
