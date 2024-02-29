@@ -19,19 +19,59 @@ namespace PersonalFinanceManagementProject.Data
             _mapper = mapper;
             _configuration = configuration;
         }
-        public Task<ServiceResponse<string>> Login(string username, string password)
+        public async Task<ServiceResponse<string>> Login(string username, string password)
         {
-            throw new NotImplementedException();
+            var response =  new ServiceResponse<string>();
+
+            var user = await _context.Users.FirstOrDefaultAsync(user => user.Username.ToLower().Equals(username.ToLower()));
+
+            if (user == null)
+            {
+                response.Success = false;
+                response.Message = "User Not Found";
+            } else if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
+                response.Success = false;
+                response.Message = "Incorrect Password";
+            } else
+            {
+                response.Data = CreateToken(user);
+            }
+
+            return response;
         }
 
-        public Task<ServiceResponse<int>> Register(User user, string password)
+        public async Task<ServiceResponse<int>> Register(User user, string password)
         {
-            throw new NotImplementedException();
+            var response = new ServiceResponse<int>();
+
+            if (await UserExists(user.Username))
+            {
+                response.Success = false;
+                response.Message = "User Already Exists";
+                return response;
+            }
+
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            response.Data = user.Id;
+            return response;
         }
 
-        public Task<bool> UserExists(string username)
+        public async Task<bool> UserExists(string username)
         {
-            throw new NotImplementedException();
+            if (await _context.Users.AnyAsync(user => user.Username.ToLower().Equals(username.ToLower())))
+            {
+                return true;
+            }
+
+            return false;
         }
 
 

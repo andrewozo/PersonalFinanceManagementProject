@@ -10,6 +10,8 @@
 
         public DbSet<Budget> Budgets => Set<Budget>();
 
+        public DbSet<User> Users => Set<User>();
+
         
     }
 }
