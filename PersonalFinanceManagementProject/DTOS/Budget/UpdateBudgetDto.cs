@@ -1,6 +1,6 @@
 ﻿namespace PersonalFinanceManagementProject.DTOS.Budget
 {
-    public class GetBudgetDto
+    public class UpdateBudgetDto
     {
         public int Id { get; set; }
 

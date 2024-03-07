@@ -1,6 +1,6 @@
 ﻿namespace PersonalFinanceManagementProject.DTOS.Budget
 {
-    public class AddBudgetDTO
+    public class AddBudgetDto
     {
         public decimal Amount { get; set; }
 

@@ -11,9 +11,9 @@ namespace PersonalFinanceManagementProject
 
             CreateMap<AddTransactionDto, Transaction>();
 
-            CreateMap<Budget, GetBudgetDTO>();
+            CreateMap<Budget, GetBudgetDto>();
 
-            CreateMap<GetBudgetDTO, Budget>();
+            CreateMap<GetBudgetDto, Budget>();
         }
     }
 }
