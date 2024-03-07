@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PersonalFinanceManagementProject.DTOS.Account;
 using PersonalFinanceManagementProject.DTOS.Budget;
 using PersonalFinanceManagementProject.DTOS.Transaction;
 
@@ -14,6 +15,10 @@ namespace PersonalFinanceManagementProject
             CreateMap<Budget, GetBudgetDto>();
 
             CreateMap<GetBudgetDto, Budget>();
+
+            CreateMap<Account, GetAccountDto>();
+
+            CreateMap<GetAccountDto, Account>();
         }
     }
 }
