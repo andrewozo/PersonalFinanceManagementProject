@@ -36,6 +36,8 @@ builder.Services.AddSwaggerGen(config =>
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IBudgetService, BudgetService>();
+builder.Services.AddScoped<IAccountService, AccountService>(); 
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
