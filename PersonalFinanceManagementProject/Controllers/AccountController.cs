@@ -45,7 +45,7 @@ namespace PersonalFinanceManagementProject.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("{id")]
+        [HttpDelete("{id}")]
 
         public async Task<ActionResult<ServiceResponse<List<GetAccountDto>>>> DeleteAccount (int id)
         {
