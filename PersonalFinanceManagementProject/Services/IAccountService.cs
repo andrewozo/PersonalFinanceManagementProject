@@ -9,7 +9,7 @@ namespace PersonalFinanceManagementProject.Services
 
          Task<ServiceResponse<GetAccountDto>> GetAccountById(int id);
 
-        Task<ServiceResponse<List<GetAccountDto>>> AddNewAccount(GetAccountDto newAccount);
+        Task<ServiceResponse<List<GetAccountDto>>> AddNewAccount(AddAccountDto newAccount);
 
         Task<ServiceResponse<GetAccountDto>> UpdateAccount(UpdateAccountDto updatedAccount);
 
