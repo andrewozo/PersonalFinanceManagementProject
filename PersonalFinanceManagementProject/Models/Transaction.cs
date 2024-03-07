@@ -8,5 +8,7 @@
         public DateTime? Date { get; set; }
 
         public string Category { get; set; } = String.Empty;
+
+        public Account? Account { get; set; }
     }
 }

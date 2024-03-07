@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalFinanceManagementProject.Data;
 
@@ -11,9 +12,11 @@ using PersonalFinanceManagementProject.Data;
 namespace PersonalFinanceManagementProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240307211316_addedAccs")]
+    partial class addedAccs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,13 +40,7 @@ namespace PersonalFinanceManagementProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Accounts");
                 });
@@ -56,9 +53,6 @@ namespace PersonalFinanceManagementProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AccountId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
@@ -67,8 +61,6 @@ namespace PersonalFinanceManagementProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
 
                     b.ToTable("Budgets");
                 });
@@ -81,9 +73,6 @@ namespace PersonalFinanceManagementProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AccountId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
@@ -95,8 +84,6 @@ namespace PersonalFinanceManagementProject.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
 
                     b.ToTable("Transactions");
                 });
@@ -124,47 +111,6 @@ namespace PersonalFinanceManagementProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("PersonalFinanceManagementProject.Models.Account", b =>
-                {
-                    b.HasOne("PersonalFinanceManagementProject.Models.User", "User")
-                        .WithOne("Account")
-                        .HasForeignKey("PersonalFinanceManagementProject.Models.Account", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PersonalFinanceManagementProject.Models.Budget", b =>
-                {
-                    b.HasOne("PersonalFinanceManagementProject.Models.Account", "Account")
-                        .WithMany("Budget")
-                        .HasForeignKey("AccountId");
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("PersonalFinanceManagementProject.Models.Transaction", b =>
-                {
-                    b.HasOne("PersonalFinanceManagementProject.Models.Account", "Account")
-                        .WithMany("Transaction")
-                        .HasForeignKey("AccountId");
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("PersonalFinanceManagementProject.Models.Account", b =>
-                {
-                    b.Navigation("Budget");
-
-                    b.Navigation("Transaction");
-                });
-
-            modelBuilder.Entity("PersonalFinanceManagementProject.Models.User", b =>
-                {
-                    b.Navigation("Account");
                 });
 #pragma warning restore 612, 618
         }
