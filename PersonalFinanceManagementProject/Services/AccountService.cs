@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PersonalFinanceManagementProject.Data;
 using PersonalFinanceManagementProject.DTOS.Account;
+using System.Security.Claims;
 
 namespace PersonalFinanceManagementProject.Services
 {
@@ -8,11 +9,18 @@ namespace PersonalFinanceManagementProject.Services
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountService(DataContext context, IMapper mapper) 
+        public AccountService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor) 
         {
             _context = context;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        private int GetUserId() 
+        {
+           return int.Parse(_httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier)!); 
         }
         public async Task<ServiceResponse<List<GetAccountDto>>> AddNewAccount(AddAccountDto newAccount)
         {
@@ -20,10 +28,13 @@ namespace PersonalFinanceManagementProject.Services
 
             var account = _mapper.Map<Account>(newAccount);
 
+            account.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
+
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
 
             serviceResponse.Data = await _context.Accounts
+                .Where(acc => acc.User!.Id == GetUserId())
                 .Select(acc => _mapper.Map<GetAccountDto>(acc))
                 .ToListAsync();
 
@@ -74,7 +85,7 @@ namespace PersonalFinanceManagementProject.Services
         {
             var serviceResponse = new ServiceResponse<List<GetAccountDto>>();
 
-            var accounts = await _context.Accounts.ToListAsync();
+            var accounts = await _context.Accounts.Where(acc => acc.User!.Id == GetUserId()).ToListAsync();
 
             serviceResponse.Data = accounts
                 .Select(acc => _mapper.Map<GetAccountDto>(acc))

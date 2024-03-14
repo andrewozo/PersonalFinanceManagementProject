@@ -14,11 +14,11 @@ namespace PersonalFinanceManagementProject
 
             CreateMap<Budget, GetBudgetDto>();
 
-            CreateMap<GetBudgetDto, Budget>();
+            CreateMap<AddBudgetDto, Budget>();
 
             CreateMap<Account, GetAccountDto>();
 
-            CreateMap<GetAccountDto, Account>();
+            CreateMap<AddAccountDto, Account>();
         }
     }
 }

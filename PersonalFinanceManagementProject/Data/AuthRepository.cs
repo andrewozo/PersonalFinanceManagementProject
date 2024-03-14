@@ -110,7 +110,7 @@ namespace PersonalFinanceManagementProject.Data
             }
 
             SymmetricSecurityKey key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(appSettingsToken));
-            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var TokenDescriptor = new SecurityTokenDescriptor
             {

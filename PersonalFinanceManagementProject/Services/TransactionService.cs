@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PersonalFinanceManagementProject.Data;
 using PersonalFinanceManagementProject.DTOS.Transaction;
+using System.Security.Claims;
 
 namespace PersonalFinanceManagementProject.Services
 {
@@ -8,19 +9,35 @@ namespace PersonalFinanceManagementProject.Services
     {
         private readonly IMapper _mapper;
         private readonly DataContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public TransactionService(IMapper mapper, DataContext context) {
+        public TransactionService(IMapper mapper, DataContext context, IHttpContextAccessor httpContextAccessor) {
             _mapper = mapper;
 
             _context = context;
+
+            _httpContextAccessor = httpContextAccessor;
         }
+
+
+        private int GetUserId()
+        {
+            return int.Parse(_httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        }
+
+
         public async Task<ServiceResponse<List<GetTransactionDto>>> AddTransaction(AddTransactionDto newTransaction)
         {
             var serviceResponse = new ServiceResponse<List<GetTransactionDto>>();
 
            var transaction = _mapper.Map<Transaction>(newTransaction);
+
+            var account = await _context.Accounts.FirstOrDefaultAsync(acc => acc.UserId == GetUserId());
+
+            transaction.Account = account;
             _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
+
 
             serviceResponse.Data = 
                 await _context

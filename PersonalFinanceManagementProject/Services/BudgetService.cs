@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PersonalFinanceManagementProject.Data;
 using PersonalFinanceManagementProject.DTOS.Budget;
+using System.Security.Claims;
 
 namespace PersonalFinanceManagementProject.Services
 {
@@ -9,11 +10,18 @@ namespace PersonalFinanceManagementProject.Services
         private readonly DataContext _context;
 
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BudgetService(DataContext context, IMapper mapper)
+        public BudgetService(DataContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        private int GetUserId()
+        {
+            return int.Parse(_httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         }
 
         public async Task<ServiceResponse<List<GetBudgetDto>>> AddBudget(AddBudgetDto newBudget)
@@ -21,6 +29,10 @@ namespace PersonalFinanceManagementProject.Services
             var serviceResponse = new ServiceResponse<List<GetBudgetDto>>();
 
             var budget = _mapper.Map<Budget>(newBudget);
+
+            var account = await _context.Accounts.FirstOrDefaultAsync(acc => acc.UserId == GetUserId());
+
+            budget.Account = account;
 
             _context.Budgets.Add(budget);
             await _context.SaveChangesAsync();

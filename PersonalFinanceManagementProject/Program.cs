@@ -25,7 +25,7 @@ builder.Services.AddSwaggerGen(config =>
 {
     config.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme 
     {
-        Description = """Standar Authorization header using the Bearer Scheme. Example: "bearer {token}"  """,
+        Description = """Standard Authorization header using the Bearer scheme. Example: "bearer {token}" """,
         In = ParameterLocation.Header,
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey
@@ -51,6 +51,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+
+builder.Services.AddHttpContextAccessor();
 
 
 
