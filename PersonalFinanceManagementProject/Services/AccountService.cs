@@ -142,8 +142,9 @@ namespace PersonalFinanceManagementProject.Services
 
             foreach (var account in accounts)
             {
-                reportBuilder.AppendLine($"Name: {account.Name}, Balance: {account.Balance}");
                 reportBuilder.AppendLine($"Username: {account.User!.Username}");
+                reportBuilder.AppendLine($"Name: {account.Name}, Balance: {account.Balance}");
+               
 
                 reportBuilder.AppendLine("Budgets:");
                 foreach (var budget in account.Budgets!)
