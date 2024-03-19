@@ -15,6 +15,8 @@ namespace PersonalFinanceManagementProject.Services
 
         Task<ServiceResponse<List<GetAccountDto>>> DeleteAccount(int id);
 
+        Task<string> PrintReport();
+
 
     }
 }

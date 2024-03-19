@@ -2,6 +2,7 @@
 using PersonalFinanceManagementProject.Data;
 using PersonalFinanceManagementProject.DTOS.Account;
 using System.Security.Claims;
+using System.Text;
 
 namespace PersonalFinanceManagementProject.Services
 {
@@ -85,7 +86,12 @@ namespace PersonalFinanceManagementProject.Services
         {
             var serviceResponse = new ServiceResponse<List<GetAccountDto>>();
 
-            var accounts = await _context.Accounts.Where(acc => acc.User!.Id == GetUserId()).ToListAsync();
+            var accounts = await _context.Accounts
+                .Where(acc => acc.User!.Id == GetUserId())
+                .Include(acc => acc.User)
+                .Include(acc => acc.Budgets)
+                .Include(acc => acc.Transactions)
+                .ToListAsync();
 
             serviceResponse.Data = accounts
                 .Select(acc => _mapper.Map<GetAccountDto>(acc))
@@ -119,6 +125,45 @@ namespace PersonalFinanceManagementProject.Services
             }
 
             return serviceResponse;
+        }
+
+        public async Task<string> PrintReport()
+        {
+            var serviceResponse = new ServiceResponse<List<GetAccountDto>>();
+
+            StringBuilder reportBuilder = new StringBuilder();
+
+            var accounts = await _context.Accounts
+                .Where(acc => acc.User!.Id == GetUserId())
+                .Include(acc => acc.User)
+                .Include(acc => acc.Budgets)
+                .Include(acc => acc.Transactions)
+                .ToListAsync();
+
+            foreach (var account in accounts)
+            {
+                reportBuilder.AppendLine($"Account ID: {account.Id}, Name: {account.Name}, Balance: {account.Balance}");
+                reportBuilder.AppendLine($"User ID: {account.User!.Id}, Username: {account.User.Username}");
+
+                reportBuilder.AppendLine("Budgets:");
+                foreach (var budget in account.Budgets!)
+                {
+                    reportBuilder.AppendLine($"- Budget ID: {budget.Id}, Amount: {budget.Amount}, Message: {budget.Message}");
+                }
+
+                reportBuilder.AppendLine("Transactions:");
+                foreach (var transaction in account.Transactions!)
+                {
+                    reportBuilder.AppendLine($"- Transaction ID: {transaction.Id}, Amount: {transaction.Amount}, Date: {transaction.Date}, Category: {transaction.Category}");
+                }
+
+                reportBuilder.AppendLine("-----"); 
+            }
+
+            return reportBuilder.ToString();
+
+
+
         }
     }
 }

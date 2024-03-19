@@ -81,7 +81,11 @@ namespace PersonalFinanceManagementProject.Services
         {
             var serviceResponse = new ServiceResponse<List<GetBudgetDto>>();
 
-            var budgets = await _context.Budgets.ToListAsync();
+            var account = await _context.Accounts.FirstOrDefaultAsync(acc => acc.UserId == GetUserId());
+
+
+
+            var budgets = await _context.Budgets.Where(budg => budg.Account!.Id == account!.Id).ToListAsync();
 
             serviceResponse.Data = budgets.Select(budget => _mapper.Map<GetBudgetDto>(budget))
                 .ToList();

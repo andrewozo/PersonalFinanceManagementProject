@@ -2,6 +2,7 @@
 using PersonalFinanceManagementProject.DTOS.Account;
 using PersonalFinanceManagementProject.DTOS.Budget;
 using PersonalFinanceManagementProject.DTOS.Transaction;
+using PersonalFinanceManagementProject.DTOS.User;
 
 namespace PersonalFinanceManagementProject
 {
@@ -19,6 +20,8 @@ namespace PersonalFinanceManagementProject
             CreateMap<Account, GetAccountDto>();
 
             CreateMap<AddAccountDto, Account>();
+
+            CreateMap<User,GetUserDto>();
         }
     }
 }

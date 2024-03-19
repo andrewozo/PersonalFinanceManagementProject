@@ -83,10 +83,14 @@ namespace PersonalFinanceManagementProject.Services
         public async Task<ServiceResponse<List<GetTransactionDto>>> GetAllTransactions()
         {
             var serviceResponse = new ServiceResponse<List<GetTransactionDto>>();
-            
-            var dbTransactions = await _context.Transactions.ToListAsync();
 
-            serviceResponse.Data = dbTransactions
+            var account = await _context.Accounts.FirstOrDefaultAsync(acc => acc.UserId == GetUserId());
+
+
+            
+            var transactions = await _context.Transactions.Where(t => t.Account!.Id == account!.Id).ToListAsync();
+
+            serviceResponse.Data = transactions
                 .Select(t => _mapper.Map<GetTransactionDto>(t))
                 .ToList();
 

@@ -12,8 +12,8 @@
 
         public User? User { get; set; }
 
-        public List<Budget>? Budget {  get; set; }
+        public List<Budget>? Budgets { get; set; }
 
-        public List<Transaction>? Transaction { get; set; }
+        public List<Transaction>? Transactions { get; set; }
     }
 }

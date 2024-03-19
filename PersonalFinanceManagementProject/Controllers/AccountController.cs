@@ -23,6 +23,13 @@ namespace PersonalFinanceManagementProject.Controllers
         {
             return Ok(await _accountService.GetAllAccounts());
         }
+
+        [HttpGet("PrintReport")]
+        public async Task<ActionResult<string>> PrintReport()
+        {
+            return Ok(await _accountService.PrintReport());
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<GetAccountDto>>> GetSingleAccount(int id)
         {
