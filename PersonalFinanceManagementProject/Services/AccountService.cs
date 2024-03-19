@@ -113,7 +113,7 @@ namespace PersonalFinanceManagementProject.Services
                     throw new Exception($"Account with ID {updatedAccount.Id} does not exist");
                 }
 
-                account.Name = updatedAccount.Name;
+                
                 account.Balance = updatedAccount.Balance;
                 await _context.SaveChangesAsync();
 
@@ -142,19 +142,19 @@ namespace PersonalFinanceManagementProject.Services
 
             foreach (var account in accounts)
             {
-                reportBuilder.AppendLine($"Account ID: {account.Id}, Name: {account.Name}, Balance: {account.Balance}");
-                reportBuilder.AppendLine($"User ID: {account.User!.Id}, Username: {account.User.Username}");
+                reportBuilder.AppendLine($"Name: {account.Name}, Balance: {account.Balance}");
+                reportBuilder.AppendLine($"Username: {account.User!.Username}");
 
                 reportBuilder.AppendLine("Budgets:");
                 foreach (var budget in account.Budgets!)
                 {
-                    reportBuilder.AppendLine($"- Budget ID: {budget.Id}, Amount: {budget.Amount}, Message: {budget.Message}");
+                    reportBuilder.AppendLine($"-Amount: {budget.Amount}, Message: {budget.Message}");
                 }
 
                 reportBuilder.AppendLine("Transactions:");
                 foreach (var transaction in account.Transactions!)
                 {
-                    reportBuilder.AppendLine($"- Transaction ID: {transaction.Id}, Amount: {transaction.Amount}, Date: {transaction.Date}, Category: {transaction.Category}");
+                    reportBuilder.AppendLine($"- Amount: {transaction.Amount}, Date: {transaction.Date}, Category: {transaction.Category}");
                 }
 
                 reportBuilder.AppendLine("-----"); 

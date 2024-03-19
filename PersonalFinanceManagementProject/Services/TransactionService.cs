@@ -10,13 +10,17 @@ namespace PersonalFinanceManagementProject.Services
         private readonly IMapper _mapper;
         private readonly DataContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IAccountService _accountService;
 
-        public TransactionService(IMapper mapper, DataContext context, IHttpContextAccessor httpContextAccessor) {
+        public TransactionService(IMapper mapper, DataContext context, IHttpContextAccessor httpContextAccessor, IAccountService accountService)
+        {
             _mapper = mapper;
 
             _context = context;
 
             _httpContextAccessor = httpContextAccessor;
+
+            _accountService = accountService;
         }
 
 
@@ -36,6 +40,14 @@ namespace PersonalFinanceManagementProject.Services
 
             transaction.Account = account;
             _context.Transactions.Add(transaction);
+            if (transaction.Category == "Deposit" || transaction.Category == "deposit")
+            {
+                account!.Balance = account.Balance  + transaction.Amount;
+            } else
+            {
+                account!.Balance = account.Balance - transaction.Amount;
+            }
+            
             await _context.SaveChangesAsync();
 
 
