@@ -9,7 +9,7 @@ using Microsoft.OpenApi.Models;
 using Auth0.AspNetCore.Authentication;
 using PersonalFinanceManagementProject.Services;
 
-
+//testing
 
 var builder = WebApplication.CreateBuilder(args);
 
