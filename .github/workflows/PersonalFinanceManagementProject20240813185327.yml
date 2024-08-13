@@ -17,7 +17,7 @@ env:
   API_IMPORT_DLL: PersonalFinanceManagementProject\bin\Release\net7.0\PersonalFinanceManagementProject.dll
   API_IMPORT_VERSION: v1
   CONFIGURATION: Release
-  DOTNET_CORE_VERSION: 7.0.x
+  DOTNET_CORE_VERSION: 7.0
   WORKING_DIRECTORY: PersonalFinanceManagementProject
 jobs:
   build:
@@ -29,7 +29,7 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
     - name: Setup SwashBuckle .NET Core
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v3.1.x
       with:
         dotnet-version: ${{ env.SWASHBUCKLE_DOTNET_CORE_VERSION }}
     - name: Restore
