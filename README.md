@@ -4,7 +4,7 @@
 <h3>This application was built using C# and .NET</h3>
 
 <ul>
-  <p>Users can do the following: </p>
+<p>Users can do the following: </p>
   
 <li>Sign Up</li>
 <li>Open an account</li>
