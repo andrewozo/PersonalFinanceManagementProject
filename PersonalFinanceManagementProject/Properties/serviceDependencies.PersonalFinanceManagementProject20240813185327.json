@@ -1,9 +1,10 @@
 {
   "dependencies": {
     "mssql1": {
-      "serviceConnectorResourceId": "",
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/PersonalFinanceManagementProject20240813185327/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsDefaultConnection_1FF757AEFA",
       "secretStore": "AzureAppSettings",
-      "type": "mssql.onprem",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/personalfinancemanagementprojectdbserver/databases/PersonalFinanceManagementProject_db",
+      "type": "mssql.azure",
       "connectionId": "ConnectionStrings:DefaultConnection",
       "dynamicId": null
     }
