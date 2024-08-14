@@ -9,6 +9,7 @@ env:
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
   WORKING_DIRECTORY: PersonalFinanceManagementProject
+
 jobs:
   build:
     runs-on: windows-latest
@@ -28,6 +29,7 @@ jobs:
 
     - name: Test
       run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
 
