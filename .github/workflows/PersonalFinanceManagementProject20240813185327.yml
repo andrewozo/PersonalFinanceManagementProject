@@ -1,4 +1,4 @@
-name: Build and deploy .NET Core application to Web App PersonalFinanceManagementProject20240813185327
+name: Build and deploy Personal Finance Management Project
 on:
   push:
     branches:
